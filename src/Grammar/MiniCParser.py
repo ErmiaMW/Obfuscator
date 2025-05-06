@@ -258,6 +258,12 @@ class MiniCParser ( Parser ):
             if hasattr( listener, "exitProgram" ):
                 listener.exitProgram(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitProgram" ):
+                return visitor.visitProgram(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -334,6 +340,12 @@ class MiniCParser ( Parser ):
             if hasattr( listener, "exitFunctionDecl" ):
                 listener.exitFunctionDecl(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitFunctionDecl" ):
+                return visitor.visitFunctionDecl(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -396,6 +408,12 @@ class MiniCParser ( Parser ):
             if hasattr( listener, "exitParams" ):
                 listener.exitParams(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitParams" ):
+                return visitor.visitParams(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -454,6 +472,12 @@ class MiniCParser ( Parser ):
             if hasattr( listener, "exitParam" ):
                 listener.exitParam(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitParam" ):
+                return visitor.visitParam(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -501,6 +525,12 @@ class MiniCParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitDeclaration" ):
                 listener.exitDeclaration(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitDeclaration" ):
+                return visitor.visitDeclaration(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -550,6 +580,12 @@ class MiniCParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitInitDeclaratorList" ):
                 listener.exitInitDeclaratorList(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitInitDeclaratorList" ):
+                return visitor.visitInitDeclaratorList(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -609,6 +645,12 @@ class MiniCParser ( Parser ):
             if hasattr( listener, "exitInitDeclarator" ):
                 listener.exitInitDeclarator(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitInitDeclarator" ):
+                return visitor.visitInitDeclarator(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -658,6 +700,12 @@ class MiniCParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitTypeSpecifier" ):
                 listener.exitTypeSpecifier(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitTypeSpecifier" ):
+                return visitor.visitTypeSpecifier(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -716,6 +764,12 @@ class MiniCParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitCompoundStmt" ):
                 listener.exitCompoundStmt(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitCompoundStmt" ):
+                return visitor.visitCompoundStmt(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -804,6 +858,12 @@ class MiniCParser ( Parser ):
             if hasattr( listener, "exitStatement" ):
                 listener.exitStatement(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitStatement" ):
+                return visitor.visitStatement(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -879,6 +939,12 @@ class MiniCParser ( Parser ):
             if hasattr( listener, "exitExpressionStmt" ):
                 listener.exitExpressionStmt(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitExpressionStmt" ):
+                return visitor.visitExpressionStmt(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -936,6 +1002,12 @@ class MiniCParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitSelectionStmt" ):
                 listener.exitSelectionStmt(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitSelectionStmt" ):
+                return visitor.visitSelectionStmt(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -1003,6 +1075,12 @@ class MiniCParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitIterationStmt" ):
                 listener.exitIterationStmt(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitIterationStmt" ):
+                return visitor.visitIterationStmt(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -1102,6 +1180,12 @@ class MiniCParser ( Parser ):
             if hasattr( listener, "exitReturnStmt" ):
                 listener.exitReturnStmt(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitReturnStmt" ):
+                return visitor.visitReturnStmt(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -1166,6 +1250,12 @@ class MiniCParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitIoStmt" ):
                 listener.exitIoStmt(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitIoStmt" ):
+                return visitor.visitIoStmt(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -1271,6 +1361,12 @@ class MiniCParser ( Parser ):
             if hasattr( listener, "exitExpression" ):
                 listener.exitExpression(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitExpression" ):
+                return visitor.visitExpression(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -1316,6 +1412,12 @@ class MiniCParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitAssignmentExpr" ):
                 listener.exitAssignmentExpr(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAssignmentExpr" ):
+                return visitor.visitAssignmentExpr(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -1372,6 +1474,12 @@ class MiniCParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitLogicalOrExpr" ):
                 listener.exitLogicalOrExpr(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitLogicalOrExpr" ):
+                return visitor.visitLogicalOrExpr(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -1431,6 +1539,12 @@ class MiniCParser ( Parser ):
             if hasattr( listener, "exitLogicalAndExpr" ):
                 listener.exitLogicalAndExpr(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitLogicalAndExpr" ):
+                return visitor.visitLogicalAndExpr(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -1488,6 +1602,12 @@ class MiniCParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitEqualityExpr" ):
                 listener.exitEqualityExpr(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitEqualityExpr" ):
+                return visitor.visitEqualityExpr(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -1552,6 +1672,12 @@ class MiniCParser ( Parser ):
             if hasattr( listener, "exitRelationalExpr" ):
                 listener.exitRelationalExpr(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitRelationalExpr" ):
+                return visitor.visitRelationalExpr(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -1614,6 +1740,12 @@ class MiniCParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitAdditiveExpr" ):
                 listener.exitAdditiveExpr(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAdditiveExpr" ):
+                return visitor.visitAdditiveExpr(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -1678,6 +1810,12 @@ class MiniCParser ( Parser ):
             if hasattr( listener, "exitMultiplicativeExpr" ):
                 listener.exitMultiplicativeExpr(self)
 
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitMultiplicativeExpr" ):
+                return visitor.visitMultiplicativeExpr(self)
+            else:
+                return visitor.visitChildren(self)
+
 
 
 
@@ -1741,6 +1879,12 @@ class MiniCParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitUnaryExpr" ):
                 listener.exitUnaryExpr(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitUnaryExpr" ):
+                return visitor.visitUnaryExpr(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -1823,6 +1967,12 @@ class MiniCParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitPrimaryExpr" ):
                 listener.exitPrimaryExpr(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitPrimaryExpr" ):
+                return visitor.visitPrimaryExpr(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -1928,6 +2078,12 @@ class MiniCParser ( Parser ):
         def exitRule(self, listener:ParseTreeListener):
             if hasattr( listener, "exitArgumentList" ):
                 listener.exitArgumentList(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitArgumentList" ):
+                return visitor.visitArgumentList(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
