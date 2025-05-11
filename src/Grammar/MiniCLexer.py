@@ -1,4 +1,4 @@
-# Generated from MiniC.g4 by ANTLR 4.13.1
+# Generated from Grammar/MiniC.g4 by ANTLR 4.13.2
 from antlr4 import *
 from io import StringIO
 import sys
@@ -98,7 +98,7 @@ def serializedATN():
         244,9,0,0,0,243,242,1,0,0,0,244,247,1,0,0,0,245,246,1,0,0,0,245,
         243,1,0,0,0,246,248,1,0,0,0,247,245,1,0,0,0,248,249,5,42,0,0,249,
         250,5,47,0,0,250,251,1,0,0,0,251,252,6,39,0,0,252,80,1,0,0,0,9,0,
-        192,202,204,212,218,224,234,245,1,6,0,0
+        192,202,204,212,218,224,234,245,1,0,1,0
     ]
 
 class MiniCLexer(Lexer):
@@ -175,7 +175,7 @@ class MiniCLexer(Lexer):
 
     def __init__(self, input=None, output:TextIO = sys.stdout):
         super().__init__(input, output)
-        self.checkVersion("4.13.1")
+        self.checkVersion("4.13.2")
         self._interp = LexerATNSimulator(self, self.atn, self.decisionsToDFA, PredictionContextCache())
         self._actions = None
         self._predicates = None
