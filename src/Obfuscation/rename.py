@@ -13,11 +13,11 @@ class RenameVisitor(MiniCVisitor):
         self.used_names = set()
 
     def _generate_name(self):
-        chars = string.ascii_letters + string.digits + '_'  # a-z, A-Z, 0-9, _
+        chars = string.ascii_letters + string.digits + '_' 
         while True:
             length = random.randint(3, 10)
             name = ''.join(random.choices(chars, k=length))
-            if name not in self.used_names and not name[0].isdigit():  # avoid starting with a digit
+            if name not in self.used_names and not name[0].isdigit(): 
                 self.used_names.add(name)
                 return name
 
@@ -47,7 +47,7 @@ class RenameVisitor(MiniCVisitor):
         return None
 
     def visitPrimaryExpr(self, ctx):
-        if ctx.IDENTIFIER() and ctx.getChildCount() == 1:  # only if it's not a function call
+        if ctx.IDENTIFIER() and ctx.getChildCount() == 1:
             original = ctx.IDENTIFIER().getText()
             if original in self.name_map:
                 self.rewriter.replaceSingleToken(ctx.IDENTIFIER().getSymbol(), self.name_map[original])
