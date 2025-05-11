@@ -1,6 +1,6 @@
-from Grammar.MiniCVisitor import MiniCVisitor
-from Grammar.MiniCParser import MiniCParser
-import nodes
+from src.Grammar.MiniCVisitor import MiniCVisitor
+from src.Grammar.MiniCParser import MiniCParser
+from src import nodes
 
 class ASTBuilder(MiniCVisitor):
     def visitProgram(self, ctx):
@@ -63,7 +63,8 @@ class ASTBuilder(MiniCVisitor):
         return nodes.ReturnNode(expr)
 
     def visitIoStmt(self, ctx):
-        kind = 'printf' if ctx.PRINTF() else 'scanf'
+        # kind = 'printf' if ctx.PRINTF() else 'scanf'
+        kind = ctx.getChild(0).getText()
         fmt_str = ctx.STRING().getText()
         args = [self.visit(e) for e in ctx.expression()] if ctx.expression() else []
         return nodes.IONode(kind, fmt_str, args)
