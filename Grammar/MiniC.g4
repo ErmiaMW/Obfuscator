@@ -84,6 +84,7 @@ STRING      : '"' (~["\\] | '\\' .)* '"' ;
 NUMBER      : [0-9]+ ;
 IDENTIFIER  : [a-zA-Z_][a-zA-Z0-9_]* ;
 
-WS          : [ \t\r\n]+ -> skip ;
-LINE_COMMENT: '//' ~[\r\n]* -> skip ;
-BLOCK_COMMENT: '/*' .*? '*/' -> skip ;
+WS          : [ \t\r\n]+ -> channel(HIDDEN) ;
+LINE_COMMENT: '//' ~[\r\n]* -> channel(HIDDEN) ;
+BLOCK_COMMENT: '/*' .*? '*/' -> channel(HIDDEN) ;
+
