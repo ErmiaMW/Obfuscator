@@ -1,21 +1,20 @@
-int jYv3e() {
-    int PnLL1wygaW = 3;
-    int fDoLWRIk = 5;
-    printf("%d\n", PnLL1wygaW + fDoLWRIk);
-	if (false) {
-		fDoLWRIk = 17;
-		PnLL1wygaW = 35;
-	}
-	int fztn = -94;
-	int yemzo = -16;
-
-    return 0;
-	if (false) {
-		fDoLWRIk = 79;
-		PnLL1wygaW = 34;
-		PnLL1wygaW = 66;
-	}
-	int hayxufzp = 41;
-	char jbndewr = 'b';
-
-}
+int RKV() {
+    int Ij2PN = 3;
+    int XiyjE = 5;
+    printf("%d\n", Ij2PN + XiyjE);
+	while (0) {
+		XiyjE = 96;
+		Ij2PN = 81;
+	}
+	int misn = -13;
+
+    return 0;
+	if (0) {
+		XiyjE = 19;
+		Ij2PN = 71;
+		XiyjE = 68;
+	}
+	int diw = 64;
+	bool qcvrspiv = false;
+
+}
