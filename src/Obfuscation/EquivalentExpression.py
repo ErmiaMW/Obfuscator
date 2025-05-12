@@ -1,41 +1,28 @@
-import random
 from antlr4 import *
 from src.Grammar.MiniCLexer import MiniCLexer
 from src.Grammar.MiniCParser import MiniCParser
 from src.Grammar.MiniCVisitor import MiniCVisitor
 from antlr4.TokenStreamRewriter import TokenStreamRewriter
 
-class EquivalentExprVisitor(MiniCVisitor):
+class EquivalentExpressionVisitor(MiniCVisitor):
     def __init__(self, token_stream):
         self.rewriter = TokenStreamRewriter(token_stream)
 
-    def _replace_expr(self, ctx, new_expr):
-        self.rewriter.replaceRange(ctx.start.tokenIndex, ctx.stop.tokenIndex, new_expr)
-
-    def visitAssignmentExpr(self, ctx):
+    def visitAdditiveExpr(self, ctx):
         if ctx.getChildCount() == 3:
             left = ctx.getChild(0).getText()
             op = ctx.getChild(1).getText()
             right = ctx.getChild(2).getText()
 
+            # فقط اگر operand عددی ساده باشد
             try:
                 val = int(right)
-                if op == "+":
-                    new_expr = f"{left} = {ctx.getChild(0).getText()} - ({-val});"
-                    self._replace_expr(ctx, new_expr)
-                elif op == "-":
-                    new_expr = f"{left} = {ctx.getChild(0).getText()} + ({-val});"
-                    self._replace_expr(ctx, new_expr)
-                elif op == "*":
-                    if val in [2, 4, 8]:
-                        shift = {2:1, 4:2, 8:3}[val]
-                        new_expr = f"{left} = {ctx.getChild(0).getText()} << {shift};"
-                        self._replace_expr(ctx, new_expr)
-                elif op == "/":
-                    if val in [2, 4, 8]:
-                        shift = {2:1, 4:2, 8:3}[val]
-                        new_expr = f"{left} = {ctx.getChild(0).getText()} >> {shift};"
-                        self._replace_expr(ctx, new_expr)
+                if op == '+':
+                    expr = f"{left} - (-{val})"
+                    self.rewriter.replaceRange(ctx.start.tokenIndex, ctx.stop.tokenIndex, expr)
+                elif op == '-':
+                    expr = f"{left} + (-{val})"
+                    self.rewriter.replaceRange(ctx.start.tokenIndex, ctx.stop.tokenIndex, expr)
             except:
                 pass
 
@@ -46,12 +33,13 @@ class EquivalentExprVisitor(MiniCVisitor):
             left = ctx.getChild(0).getText()
             op = ctx.getChild(1).getText()
             right = ctx.getChild(2).getText()
+
             if op == "==":
-                new_expr = f"!({left} != {right})"
-                self._replace_expr(ctx, new_expr)
+                expr = f"!({left} != {right})"
+                self.rewriter.replaceRange(ctx.start.tokenIndex, ctx.stop.tokenIndex, expr)
             elif op == "!=":
-                new_expr = f"!({left} == {right})"
-                self._replace_expr(ctx, new_expr)
+                expr = f"!({left} == {right})"
+                self.rewriter.replaceRange(ctx.start.tokenIndex, ctx.stop.tokenIndex, expr)
 
         return self.visitChildren(ctx)
 
@@ -60,29 +48,34 @@ class EquivalentExprVisitor(MiniCVisitor):
             left = ctx.getChild(0).getText()
             op = ctx.getChild(1).getText()
             right = ctx.getChild(2).getText()
-            inverse_map = {
-                ">": f"!({left} <= {right})",
-                "<": f"!({left} >= {right})",
-                ">=": f"!({left} < {right})",
-                "<=": f"!({left} > {right})"
-            }
-            if op in inverse_map:
-                self._replace_expr(ctx, inverse_map[op])
 
-        return self.visitChildren(ctx)
+            if op == "<":
+                expr = f"!({left} >= {right})"
+                self.rewriter.replaceRange(ctx.start.tokenIndex, ctx.stop.tokenIndex, expr)
+            elif op == ">":
+                expr = f"!({left} <= {right})"
+                self.rewriter.replaceRange(ctx.start.tokenIndex, ctx.stop.tokenIndex, expr)
+            elif op == "<=":
+                expr = f"!({left} > {right})"
+                self.rewriter.replaceRange(ctx.start.tokenIndex, ctx.stop.tokenIndex, expr)
+            elif op == ">=":
+                expr = f"!({left} < {right})"
+                self.rewriter.replaceRange(ctx.start.tokenIndex, ctx.stop.tokenIndex, expr)
 
-    def visitLogicalOrExpr(self, ctx):
-        if ctx.getChildCount() == 3 and ctx.getChild(1).getText() == '||':
-            expr = ctx.getText()
-            new_expr = f"!!({expr})"
-            self._replace_expr(ctx, new_expr)
         return self.visitChildren(ctx)
 
     def visitLogicalAndExpr(self, ctx):
-        if ctx.getChildCount() == 3 and ctx.getChild(1).getText() == '&&':
-            expr = ctx.getText()
-            new_expr = f"!!({expr})"
-            self._replace_expr(ctx, new_expr)
+        if ctx.getChildCount() == 3 and ctx.getChild(1).getText() == "&&":
+            text = ctx.getText()
+            expr = f"!!({text})"
+            self.rewriter.replaceRange(ctx.start.tokenIndex, ctx.stop.tokenIndex, expr)
+        return self.visitChildren(ctx)
+
+    def visitLogicalOrExpr(self, ctx):
+        if ctx.getChildCount() == 3 and ctx.getChild(1).getText() == "||":
+            text = ctx.getText()
+            expr = f"!!({text})"
+            self.rewriter.replaceRange(ctx.start.tokenIndex, ctx.stop.tokenIndex, expr)
         return self.visitChildren(ctx)
 
 
@@ -93,7 +86,7 @@ def equaivalent_expression(input_path, output_path):
     parser = MiniCParser(tokens)
     tree = parser.program()
 
-    visitor = EquivalentExprVisitor(tokens)
+    visitor = EquivalentExpressionVisitor(tokens)
     visitor.visit(tree)
 
     with open(output_path, "w", encoding="utf-8") as f:
