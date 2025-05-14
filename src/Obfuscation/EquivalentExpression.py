@@ -4,9 +4,10 @@ from src.Grammar.MiniCParser import MiniCParser
 from src.Grammar.MiniCVisitor import MiniCVisitor
 from antlr4.TokenStreamRewriter import TokenStreamRewriter
 
-class EquivalentExpressionVisitor(MiniCVisitor):
+class ExpressionTransformer(MiniCVisitor):
     def __init__(self, token_stream):
         self.rewriter = TokenStreamRewriter(token_stream)
+        self.token_stream = token_stream
 
     def visitAdditiveExpr(self, ctx):
         if ctx.getChildCount() == 3:
@@ -14,17 +15,12 @@ class EquivalentExpressionVisitor(MiniCVisitor):
             op = ctx.getChild(1).getText()
             right = ctx.getChild(2).getText()
 
-            # فقط اگر operand عددی ساده باشد
-            try:
-                val = int(right)
-                if op == '+':
-                    expr = f"{left} - (-{val})"
-                    self.rewriter.replaceRange(ctx.start.tokenIndex, ctx.stop.tokenIndex, expr)
-                elif op == '-':
-                    expr = f"{left} + (-{val})"
-                    self.rewriter.replaceRange(ctx.start.tokenIndex, ctx.stop.tokenIndex, expr)
-            except:
-                pass
+            if op == '+':
+                new_expr = f"{left} - (-{right})"
+                self.rewriter.replaceRange(ctx.start.tokenIndex, ctx.stop.tokenIndex, new_expr)
+            elif op == '-':
+                new_expr = f"{left} + (-{right})"
+                self.rewriter.replaceRange(ctx.start.tokenIndex, ctx.stop.tokenIndex, new_expr)
 
         return self.visitChildren(ctx)
 
@@ -34,48 +30,13 @@ class EquivalentExpressionVisitor(MiniCVisitor):
             op = ctx.getChild(1).getText()
             right = ctx.getChild(2).getText()
 
-            if op == "==":
-                expr = f"!({left} != {right})"
-                self.rewriter.replaceRange(ctx.start.tokenIndex, ctx.stop.tokenIndex, expr)
-            elif op == "!=":
-                expr = f"!({left} == {right})"
-                self.rewriter.replaceRange(ctx.start.tokenIndex, ctx.stop.tokenIndex, expr)
+            if op == '==':
+                new_expr = f"!({left} != {right})"
+                self.rewriter.replaceRange(ctx.start.tokenIndex, ctx.stop.tokenIndex, new_expr)
+            elif op == '!=':
+                new_expr = f"!({left} == {right})"
+                self.rewriter.replaceRange(ctx.start.tokenIndex, ctx.stop.tokenIndex, new_expr)
 
-        return self.visitChildren(ctx)
-
-    def visitRelationalExpr(self, ctx):
-        if ctx.getChildCount() == 3:
-            left = ctx.getChild(0).getText()
-            op = ctx.getChild(1).getText()
-            right = ctx.getChild(2).getText()
-
-            if op == "<":
-                expr = f"!({left} >= {right})"
-                self.rewriter.replaceRange(ctx.start.tokenIndex, ctx.stop.tokenIndex, expr)
-            elif op == ">":
-                expr = f"!({left} <= {right})"
-                self.rewriter.replaceRange(ctx.start.tokenIndex, ctx.stop.tokenIndex, expr)
-            elif op == "<=":
-                expr = f"!({left} > {right})"
-                self.rewriter.replaceRange(ctx.start.tokenIndex, ctx.stop.tokenIndex, expr)
-            elif op == ">=":
-                expr = f"!({left} < {right})"
-                self.rewriter.replaceRange(ctx.start.tokenIndex, ctx.stop.tokenIndex, expr)
-
-        return self.visitChildren(ctx)
-
-    def visitLogicalAndExpr(self, ctx):
-        if ctx.getChildCount() == 3 and ctx.getChild(1).getText() == "&&":
-            text = ctx.getText()
-            expr = f"!!({text})"
-            self.rewriter.replaceRange(ctx.start.tokenIndex, ctx.stop.tokenIndex, expr)
-        return self.visitChildren(ctx)
-
-    def visitLogicalOrExpr(self, ctx):
-        if ctx.getChildCount() == 3 and ctx.getChild(1).getText() == "||":
-            text = ctx.getText()
-            expr = f"!!({text})"
-            self.rewriter.replaceRange(ctx.start.tokenIndex, ctx.stop.tokenIndex, expr)
         return self.visitChildren(ctx)
 
 
@@ -86,8 +47,8 @@ def equaivalent_expression(input_path, output_path):
     parser = MiniCParser(tokens)
     tree = parser.program()
 
-    visitor = EquivalentExpressionVisitor(tokens)
-    visitor.visit(tree)
+    transformer = ExpressionTransformer(tokens)
+    transformer.visit(tree)
 
     with open(output_path, "w", encoding="utf-8") as f:
-        f.write(visitor.rewriter.getDefaultText())
+        f.write(transformer.rewriter.getDefaultText())
