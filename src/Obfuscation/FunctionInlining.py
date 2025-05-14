@@ -1,46 +1,63 @@
+import copy
 from antlr4 import *
 from src.Grammar.MiniCLexer import MiniCLexer
 from src.Grammar.MiniCParser import MiniCParser
 from src.Grammar.MiniCVisitor import MiniCVisitor
 from antlr4.TokenStreamRewriter import TokenStreamRewriter
-import re
 
-class FunctionInliningVisitor(MiniCVisitor):
+class FunctionInliner(MiniCVisitor):
     def __init__(self, token_stream):
         self.rewriter = TokenStreamRewriter(token_stream)
         self.token_stream = token_stream
-        self.functions = {} 
+        self.inlineable_funcs = {}
 
-    def visitFunctionDef(self, ctx):
-        func_name = ctx.IDENTIFIER().getText()
-        if func_name == "main":
+    def visitFunctionDecl(self, ctx):
+        name = ctx.IDENTIFIER().getText()
+        if name == "main":
             return self.visitChildren(ctx)
 
-        params = [p.IDENTIFIER().getText() for p in ctx.declarator().parameterList().parameterDeclaration()] if ctx.declarator().parameterList() else []
-        body = ctx.compoundStmt().getText()
+        params = ctx.params()
+        compound = ctx.compoundStmt()
+        stmts = compound.statement()
 
-        match = re.search(r'return\s+([^;]+);', body)
-        if match:
-            return_expr = match.group(1)
-            self.functions[func_name] = (params, return_expr)
-            self.rewriter.delete(ctx.start.tokenIndex, ctx.stop.tokenIndex)
-        return None
+        if len(stmts) == 1 and stmts[0].returnStmt():
+            return_expr = self.token_stream.getText(
+                stmts[0].returnStmt().expression().start.tokenIndex,
+                stmts[0].returnStmt().expression().stop.tokenIndex,
+            )
 
-    def visitPostfixExpr(self, ctx):
+            param_names = []
+            if params:
+                for param in params.param():
+                    param_names.append(param.IDENTIFIER().getText())
+
+            self.inlineable_funcs[name] = {
+                "params": param_names,
+                "body": return_expr,
+            }
+
+        return self.visitChildren(ctx)
+
+    def visitPrimaryExpr(self, ctx):
         if ctx.getChildCount() >= 3 and ctx.getChild(1).getText() == '(':
-            func_name = ctx.getChild(0).getText()
-            if func_name in self.functions:
-                param_names, return_expr = self.functions[func_name]
-                arg_texts = [ctx.getChild(i).getText() for i in range(2, ctx.getChildCount() - 1, 2)]
+            func_name = ctx.IDENTIFIER().getText()
 
-                if len(param_names) != len(arg_texts):
-                    return self.visitChildren(ctx)
+            if func_name in self.inlineable_funcs:
+                func_info = self.inlineable_funcs[func_name]
+                body = func_info["body"]
+                param_names = func_info["params"]
 
-                inlined = return_expr
-                for p, a in zip(param_names, arg_texts):
-                    inlined = re.sub(r'\b' + re.escape(p) + r'\b', a, inlined)
+                args = []
+                if ctx.argumentList():
+                    for expr in ctx.argumentList().expression():
+                        text = self.token_stream.getText(expr.start.tokenIndex, expr.stop.tokenIndex)
+                        args.append(text)
 
-                self.rewriter.replaceRange(ctx.start.tokenIndex, ctx.stop.tokenIndex, f"({inlined})")
+                inline_expr = body
+                for p, a in zip(param_names, args):
+                    inline_expr = inline_expr.replace(p, f"({a})")
+
+                self.rewriter.replaceRange(ctx.start.tokenIndex, ctx.stop.tokenIndex, inline_expr)
 
         return self.visitChildren(ctx)
 
@@ -52,8 +69,8 @@ def function_inlining(input_path, output_path):
     parser = MiniCParser(tokens)
     tree = parser.program()
 
-    visitor = FunctionInliningVisitor(tokens)
-    visitor.visit(tree)
+    inliner = FunctionInliner(tokens)
+    inliner.visit(tree)
 
     with open(output_path, "w", encoding="utf-8") as f:
-        f.write(visitor.rewriter.getDefaultText())
+        f.write(inliner.rewriter.getDefaultText())

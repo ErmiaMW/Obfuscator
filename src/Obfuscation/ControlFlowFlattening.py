@@ -1,3 +1,4 @@
+import random
 from antlr4 import *
 from src.Grammar.MiniCLexer import MiniCLexer
 from src.Grammar.MiniCParser import MiniCParser
@@ -8,44 +9,55 @@ class ControlFlowFlattener(MiniCVisitor):
     def __init__(self, token_stream):
         self.rewriter = TokenStreamRewriter(token_stream)
         self.token_stream = token_stream
+        self.selector_name = "selector_" + str(random.randint(1000, 9999))
+        self.counter = 1
 
     def visitFunctionDecl(self, ctx):
-        # فقط تابع main را تغییر بده
-        func_name = ctx.IDENTIFIER().getText()
-        if func_name != "main":
-            return self.visitChildren(ctx)
+        if ctx.IDENTIFIER().getText() == "main":
+            self._flatten_main_function(ctx)
+        return self.visitChildren(ctx)
 
-        compound = ctx.compoundStmt()
+    def _flatten_main_function(self, ctx):
+        block = ctx.compoundStmt()
+        stmts = block.statement()
 
-        # استخراج تمام بلاک‌های statement داخل تابع main
-        statements = []
-        for child in compound.children:
-            if isinstance(child, MiniCParser.StatementContext):
-                statements.append(child)
+        selector_value = self.counter
+        init_code = f"int {self.selector_name} = {selector_value};\n"
 
-        # اگر بدنه‌ای نداشت، کاری نکن
-        if not statements:
-            return self.visitChildren(ctx)
+        switch_code = f"while ({self.selector_name} > 0) {{\n\tswitch({self.selector_name}) {{\n"
 
-        selector_var = "__cf_selector"
-        flattened_code = f"\n\tint {selector_var} = 1;\n\twhile ({selector_var} > 0) {{\n\t\tswitch({selector_var}) {{\n"
+        for stmt in stmts:
+            case_num = self.counter
 
-        for idx, stmt in enumerate(statements):
-            stmt_text = self.token_stream.getText(stmt.start, stmt.stop)
-            next_selector = idx + 2 if idx < len(statements) - 1 else 0  # آخرین case به 0 ختم می‌شود
-            flattened_code += (
-                f"\t\t\tcase {idx+1}:\n"
-                f"\t\t\t\t{stmt_text}\n"
-                f"\t\t\t\t{selector_var} = {next_selector};\n"
-                f"\t\t\t\tbreak;\n"
+            start_index = stmt.start.tokenIndex
+            stop_index = stmt.stop.tokenIndex
+            case_code = self.token_stream.getText(start_index, stop_index)
+
+            switch_case = (
+                f"\t\tcase {case_num}:\n"
+                f"\t\t\t{case_code}\n"
+                f"\t\t\t{self.selector_name} = {case_num + 1};\n"
+                f"\t\t\tbreak;\n"
             )
 
-        flattened_code += "\t\t}\n\t}\n"
+            switch_code += switch_case
+            self.counter += 1
 
-        # جایگزین کردن کل بدنه تابع main با ساختار flatten‌شده
-        self.rewriter.replaceRange(compound.start.tokenIndex, compound.stop.tokenIndex, "{\n" + flattened_code + "}")
+        switch_code += (
+            f"\t\tcase {self.counter}:\n"
+            f"\t\t\t{self.selector_name} = 0;\n"
+            f"\t\t\tbreak;\n"
+            f"\t}}\n}}\n"
+        )
 
-        return None
+        full_new_code = "{" + "\n\t" + init_code + "\n\t" + switch_code + "}"
+        self.rewriter.replaceRange(block.start.tokenIndex, block.stop.tokenIndex, full_new_code)
+
+    def visitChildren(self, node):
+        result = None
+        for child in node.getChildren():
+            result = child.accept(self)
+        return result
 
 
 def control_flow_flattening(input_path, output_path):
@@ -55,8 +67,8 @@ def control_flow_flattening(input_path, output_path):
     parser = MiniCParser(tokens)
     tree = parser.program()
 
-    visitor = ControlFlowFlattener(tokens)
-    visitor.visit(tree)
+    flattener = ControlFlowFlattener(tokens)
+    flattener.visit(tree)
 
     with open(output_path, "w", encoding="utf-8") as f:
-        f.write(visitor.rewriter.getDefaultText())
+        f.write(flattener.rewriter.getDefaultText())
