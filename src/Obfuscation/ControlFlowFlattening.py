@@ -19,23 +19,24 @@ class ControlFlowFlattener(MiniCVisitor):
 
     def _flatten_main_function(self, ctx):
         block = ctx.compoundStmt()
-        stmts = block.statement()
+        items = block.children[1:-1]  # حذف { و } در ابتدا و انتها
 
         selector_value = self.counter
         init_code = f"int {self.selector_name} = {selector_value};\n"
-
         switch_code = f"while ({self.selector_name} > 0) {{\n\tswitch({self.selector_name}) {{\n"
 
-        for stmt in stmts:
-            case_num = self.counter
+        for item in items:
+            if not hasattr(item, 'start') or not hasattr(item, 'stop'):
+                continue  # skip if not valid node
 
-            start_index = stmt.start.tokenIndex
-            stop_index = stmt.stop.tokenIndex
-            case_code = self.token_stream.getText(start_index, stop_index)
+            case_num = self.counter
+            start_index = item.start.tokenIndex
+            stop_index = item.stop.tokenIndex
+            code = self.token_stream.getText(start_index, stop_index)
 
             switch_case = (
                 f"\t\tcase {case_num}:\n"
-                f"\t\t\t{case_code}\n"
+                f"\t\t\t{code}\n"
                 f"\t\t\t{self.selector_name} = {case_num + 1};\n"
                 f"\t\t\tbreak;\n"
             )
@@ -43,6 +44,7 @@ class ControlFlowFlattener(MiniCVisitor):
             switch_code += switch_case
             self.counter += 1
 
+        # پایان اجرای switch
         switch_code += (
             f"\t\tcase {self.counter}:\n"
             f"\t\t\t{self.selector_name} = 0;\n"
