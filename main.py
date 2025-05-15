@@ -36,8 +36,6 @@ def run_obfuscator():
 
     try:
         shutil.copyfile(input_path, output_path)
-        if rename_var.get():
-            rename_variables_and_functions(output_path, output_path)
         if inject_dead.get():
             inject_dead_code(output_path, output_path)
         if flatten_var.get():
@@ -48,6 +46,8 @@ def run_obfuscator():
             function_inlining(output_path, output_path)
         if equiv_var.get():
             equaivalent_expression(output_path, output_path)
+        if rename_var.get():
+            rename_variables_and_functions(output_path, output_path)    
 
         messagebox.showinfo("Success", "Obfuscation completed successfully.")
     except Exception as e:
