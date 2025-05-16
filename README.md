@@ -65,3 +65,10 @@ The project includes a **Tkinter-based graphical interface** to allow users to:
 Install the ANTLR runtime via pip:
 ```bash
 pip install antlr4-python3-runtime
+
+---
+
+## Developed by :
+-Ermia Mirzaei
+-Ali Norouzi
+-Amirali Mohammadpour
