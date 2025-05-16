@@ -1,9 +1,7 @@
 # Developed by :
--Ermia Mirzaei
--Ali Norouzi
--Amirali Mohammadpour
-
-
+- Ermia Mirzaei
+- Ali Norouzi
+- Amirali Mohammadpour
 # Obfuscator for Mini-C Language
 
 A powerful Python-based obfuscator for the Mini-C programming language, designed to transform readable source code into a harder-to-understand version — while preserving its original functionality. This tool is perfect for protecting intellectual property or educational exploration of obfuscation techniques.
