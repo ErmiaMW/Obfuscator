@@ -1,11 +1,8 @@
-# Obfuscator
-Mini-C Code Obfuscator
+# Developed by :
+-Ermia Mirzaei
+-Ali Norouzi
+-Amirali Mohammadpour
 
-run 
-antlr4 -Dlanguage=Python3 -visitor MiniC.g4 -o ../src/Grammar
-in the ~/Grammar  to generate the MiniCLexer.p and  MiniCListener.py and MiniCParser.py
-
-grammar docs :
 
 # Obfuscator for Mini-C Language
 
@@ -65,10 +62,3 @@ The project includes a **Tkinter-based graphical interface** to allow users to:
 Install the ANTLR runtime via pip:
 ```bash
 pip install antlr4-python3-runtime
-
----
-
-## Developed by :
--Ermia Mirzaei
--Ali Norouzi
--Amirali Mohammadpour
