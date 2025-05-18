@@ -11,38 +11,44 @@ class RenameVisitor(MiniCVisitor):
         self.token_stream = token_stream
         self.name_map = {}
         self.used_names = set()
+        self.skip_names = {'main'}  # Do not rename these
 
     def _generate_name(self):
         chars = string.ascii_letters + string.digits + '_' 
         while True:
             length = random.randint(3, 10)
             name = ''.join(random.choices(chars, k=length))
-            if name not in self.used_names and not name[0].isdigit(): 
+            if name not in self.used_names and not name[0].isdigit():
                 self.used_names.add(name)
                 return name
 
     def _rename(self, original):
+        if original in self.skip_names:
+            return original
         if original not in self.name_map:
             self.name_map[original] = self._generate_name()
         return self.name_map[original]
 
     def visitFunctionDecl(self, ctx):
         name_token = ctx.IDENTIFIER().getSymbol()
-        new_name = self._rename(name_token.text)
-        self.rewriter.replaceSingleToken(name_token, new_name)
+        if name_token.text not in self.skip_names:
+            new_name = self._rename(name_token.text)
+            self.rewriter.replaceSingleToken(name_token, new_name)
         self.visitChildren(ctx)
         return None
 
     def visitParam(self, ctx):
         name_token = ctx.IDENTIFIER().getSymbol()
-        new_name = self._rename(name_token.text)
-        self.rewriter.replaceSingleToken(name_token, new_name)
+        if name_token.text not in self.skip_names:
+            new_name = self._rename(name_token.text)
+            self.rewriter.replaceSingleToken(name_token, new_name)
         return None
 
     def visitInitDeclarator(self, ctx):
         name_token = ctx.IDENTIFIER().getSymbol()
-        new_name = self._rename(name_token.text)
-        self.rewriter.replaceSingleToken(name_token, new_name)
+        if name_token.text not in self.skip_names:
+            new_name = self._rename(name_token.text)
+            self.rewriter.replaceSingleToken(name_token, new_name)
         self.visitChildren(ctx)
         return None
 
@@ -61,6 +67,7 @@ class RenameVisitor(MiniCVisitor):
                 if name_token.text in self.name_map:
                     self.rewriter.replaceSingleToken(name_token, self.name_map[name_token.text])
         return self.visitChildren(ctx)
+
 
 
 def rename_variables_and_functions(input_path, output_path):
