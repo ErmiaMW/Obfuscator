@@ -1,79 +1,75 @@
 int main() {
-	int selector_1796 = 1;
-
-	while (selector_1796 > 0) {
-	switch(selector_1796) {
+	int atRG6 = 1;
+	while (atRG6 > 0) {
+	switch(atRG6) {
 		case 1
-			int a = 3;
-			selector_1796 = 2;
+			int FdQv0 = 3;
+			atRG6 = 2;
 			break;
 		case 2
-			int b = 5;
-			selector_1796 = 3;
+			int Zlh = 5;
+			atRG6 = 3;
 			break;
 		case 3
-			int g = a - (-b);
-			selector_1796 = 4;
+			int t2S3 = FdQv0 - (-Zlh);
+			atRG6 = 4;
 			break;
 		case 4
-			printf("%d\n", a - (-b));
-			selector_1796 = 5;
+			printf("%d\n", FdQv0 - (-Zlh));
+			atRG6 = 5;
 			break;
 		case 5
-			if (false) {
-		b = 45;
-		a = 9;
+			while (0) {
+		Zlh = 42;
+		t2S3 = 31;
 	}
-			selector_1796 = 6;
+			atRG6 = 6;
 			break;
 		case 6
-			char zadcj = 'q';
-			selector_1796 = 7;
+			int Yj9 = -64;
+			atRG6 = 7;
 			break;
 		case 7
-			return 0;
-			selector_1796 = 8;
+			bool IllhWu1Lb_ = true;
+			atRG6 = 8;
 			break;
 		case 8
-			if (false) {
-		b = 100;
-		g = 82;
-		a = 12;
-	}
-			selector_1796 = 9;
+			return 0;
+			atRG6 = 9;
 			break;
 		case 9
-			int ajuh = -45;
-			selector_1796 = 10;
+			if (false) {
+		Zlh = 30;
+		t2S3 = 90;
+	}
+			atRG6 = 10;
 			break;
 		case 10
-			int tstxdpulh = 44;
-			selector_1796 = 11;
+			bool PceSH2Wz = false;
+			atRG6 = 11;
 			break;
 		case 11
-			selector_1796 = 0;
+			atRG6 = 0;
 			break;
 	}
 }
 }
-
-int xpbdfj() {
-    int x = 80;
-    int y = 46;    
-    if (!(x%2 != 0)) {
-        int y = 1;
-        for (int i = 0; i < 3; i - (-+)) {
-            y*=i - (-1);
+int exeK() {
+    int o5gc7ebqwB = 20;
+    int LM0phD2p_ = 28;    
+    if (!(o5gc7ebqwB%2 != 0)) {
+        int LM0phD2p_ = 1;
+        for (int i = 0; i < 3; i++) {
+            LM0phD2p_*=i - (-1);
         }
-        x - (-=y);
+        o5gc7ebqwB += LM0phD2p_;
     } else {
-        int temp = 0;
-        while (temp < 5) {
-            x - (-=temp);
-            temp - (-+);
+        int G9q = 0;
+        while (G9q < 5) {
+            o5gc7ebqwB += G9q;
+            G9q++;
         }
     }
-    int z = x - (-y);
-    return z*4;
+    int tW1 = o5gc7ebqwB - (-LM0phD2p_);
+    return tW1*4;
 }
-
