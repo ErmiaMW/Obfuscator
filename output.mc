@@ -1,5 +1,5 @@
 int main() {
-	int BVk = 1;
+  int BVk = 1;
 	while (BVk > 0) {
 	switch(BVk) {
 		case 1
