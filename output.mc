@@ -1,56 +1,7 @@
-int main() {
-
-
-	int selector_3176 = 1;
-
-
-
-
-
-	while (selector_3176 > 0) {
-
-
-	switch(selector_3176) {
-
-
-		case 1
-
-
-			printf("%d\n", a - (-b));
-
-
-			selector_3176 = 2;
-
-
-			break;
-
-
-		case 2
-
-
-			return 0;
-
-
-			selector_3176 = 3;
-
-
-			break;
-
-
-		case 3
-
-
-			selector_3176 = 0;
-
-
-			break;
-
-
-	}
-
-
-}
-
-
-}
-
+int cST() {
+    int TQytGXS = 3;
+    int ECm5IySZzQ = 5;
+    int amK1MYpte = TQytGXS + ECm5IySZzQ;
+    printf("%d\n", TQytGXS + ECm5IySZzQ);
+    return 0;
+}
