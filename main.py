@@ -24,6 +24,18 @@ def select_output_file():
         output_entry.delete(0, tk.END)
         output_entry.insert(0, filepath)
 
+def remove_all_empty_lines_from_file(input_path: str, output_path: str = None):
+    if output_path is None:
+        output_path = input_path
+
+    with open(input_path, 'r', encoding='utf-8') as file:
+        lines = file.readlines()
+
+    non_empty_lines = [line for line in lines if line.strip() != '']
+
+    with open(output_path, 'w', encoding='utf-8') as file:
+        file.writelines(non_empty_lines)
+
 
 def run_obfuscator():
     input_path = input_entry.get()
@@ -38,8 +50,6 @@ def run_obfuscator():
         shutil.copyfile(input_path, output_path)
         if inject_dead.get():
             inject_dead_code(output_path, output_path)
-        if flatten_var.get():
-            control_flow_flattening(output_path, output_path)
         if dummy_var.get():
             dummy_function(output_path, output_path)
         if inline_var.get():
@@ -47,7 +57,12 @@ def run_obfuscator():
         if equiv_var.get():
             equaivalent_expression(output_path, output_path)
         if rename_var.get():
-            rename_variables_and_functions(output_path, output_path)    
+            rename_variables_and_functions(output_path, output_path)
+        if flatten_var.get():
+            control_flow_flattening(output_path, output_path)
+        remove_all_empty_lines_from_file(output_path)  
+
+  
 
         messagebox.showinfo("Success", "Obfuscation completed successfully.")
     except Exception as e:

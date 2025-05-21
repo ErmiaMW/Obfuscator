@@ -9,7 +9,14 @@ class ExpressionTransformer(MiniCVisitor):
         self.rewriter = TokenStreamRewriter(token_stream)
         self.token_stream = token_stream
 
+    def contains_ignored_operators(self, ctx):
+        text = ctx.getText()
+        return any(op in text for op in ('++', '--', '+=', '-='))
+
     def visitAdditiveExpr(self, ctx):
+        if self.contains_ignored_operators(ctx):
+            return self.visitChildren(ctx)
+
         if ctx.getChildCount() == 3:
             left = ctx.getChild(0).getText()
             op = ctx.getChild(1).getText()
@@ -25,6 +32,9 @@ class ExpressionTransformer(MiniCVisitor):
         return self.visitChildren(ctx)
 
     def visitEqualityExpr(self, ctx):
+        if self.contains_ignored_operators(ctx):
+            return self.visitChildren(ctx)
+
         if ctx.getChildCount() == 3:
             left = ctx.getChild(0).getText()
             op = ctx.getChild(1).getText()
