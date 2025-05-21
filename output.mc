@@ -1,75 +1,74 @@
 int main() {
-  int BVk = 1;
-	while (BVk > 0) {
-	switch(BVk) {
-		case 1
-			int YK2l = 3;
-			BVk = 2;
+	int selector_4816 = 1;
+	while (selector_4816 > 0) {
+	switch(selector_4816) {
+		case 1:
+			int b8sGRfrwU = 3;
+			selector_4816 = 2;
 			break;
-		case 2
-			int n8ajCf4 = 5;
-			BVk = 3;
+		case 2:
+			int UvW = 5;
+			selector_4816 = 3;
 			break;
-		case 3
-			int j6m74OiPU = YK2l - (-n8ajCf4);
-			BVk = 4;
+		case 3:
+			int yxGEorJB = b8sGRfrwU - (-UvW);
+			selector_4816 = 4;
 			break;
-		case 4
-			printf("%d\n", YK2l - (-n8ajCf4));
-			BVk = 5;
+		case 4:
+			printf("%d\n", b8sGRfrwU - (-UvW));
+			selector_4816 = 5;
 			break;
-		case 5
-			if (false) {
-		n8ajCf4 = 62;
-		j6m74OiPU = 96;
-		n8ajCf4 = 14;
-	}
-			BVk = 6;
-			break;
-		case 6
-			char Q4R = 's';
-			BVk = 7;
-			break;
-		case 7
-			char YTU7tXAe = 'o';
-			BVk = 8;
-			break;
-		case 8
-			return 0;
-			BVk = 9;
-			break;
-		case 9
+		case 5:
 			if (0) {
-		YK2l = 62;
+		UvW = 84;
 	}
-			BVk = 10;
+			selector_4816 = 6;
 			break;
-		case 10
-			bool wTJ = true;
-			BVk = 11;
+		case 6:
+			char z_A2lMwK3P = 's';
+			selector_4816 = 7;
 			break;
-		case 11
-			BVk = 0;
+		case 7:
+			return 0;
+			selector_4816 = 8;
+			break;
+		case 8:
+			if (0) {
+		b8sGRfrwU = 92;
+		b8sGRfrwU = 76;
+	}
+			selector_4816 = 9;
+			break;
+		case 9:
+			bool qx9xq = true;
+			selector_4816 = 10;
+			break;
+		case 10:
+			char XgVjZR = 't';
+			selector_4816 = 11;
+			break;
+		case 11:
+			selector_4816 = 0;
 			break;
 	}
 }
 }
-int opd_Gh0fs() {
-    int Vv_cNO = 33;
-    int YvKjC1bnW = 82;    
-    if (!(Vv_cNO%2 != 0)) {
-        int YvKjC1bnW = 1;
+int WHM() {
+    int wQbGWUrb = 25;
+    int LCV9i = 77;    
+    if (!(wQbGWUrb%2 != 0)) {
+        int LCV9i = 1;
         for (int i = 0; i < 3; i++) {
-            YvKjC1bnW*=i - (-1);
+            LCV9i*=i - (-1);
         }
-        Vv_cNO += YvKjC1bnW;
+        wQbGWUrb += LCV9i;
     } else {
-        int tPLPgzpA = 0;
-        while (tPLPgzpA < 5) {
-            Vv_cNO += tPLPgzpA;
-            tPLPgzpA++;
+        int JdUIC = 0;
+        while (JdUIC < 5) {
+            wQbGWUrb += JdUIC;
+            JdUIC++;
         }
     }
-    int y4ELwev = Vv_cNO - (-YvKjC1bnW);
-    return y4ELwev*4;
+    int mIv3t7y1o = wQbGWUrb - (-LCV9i);
+    return mIv3t7y1o*4;
 }
