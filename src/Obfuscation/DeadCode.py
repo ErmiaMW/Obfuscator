@@ -25,23 +25,20 @@ class DeadCodeInjector(MiniCVisitor):
     def _generate_dead_code(self):
         wrapper = random.choice(['if (0)', 'while (0)', 'if (false)'])
 
-        # Generate 1–3 dead inner statements (with known vars if possible)
         dead_lines = []
         for _ in range(random.randint(1, 3)):
             if self.known_vars:
                 var = random.choice(list(self.known_vars))
                 expr = f'{var} = {random.randint(1, 100)};'
-                dead_lines.append(f'\t\t{expr}')  # 2 tabs inside block
+                dead_lines.append(f'\t\t{expr}')  
             else:
                 typ = random.choice(['int', 'char', 'bool'])
                 name = self._random_var_name()
                 value = self._random_value(typ)
-                dead_lines.append(f'\t\t{typ} {name} = {value};')  # 2 tabs inside block
+                dead_lines.append(f'\t\t{typ} {name} = {value};')  
 
-        # Build the block
         block = f"\t{wrapper} {{\n" + '\n'.join(dead_lines) + "\n\t}"
 
-        # Add 1–2 unused variable declarations outside the block (1 tab)
         for _ in range(random.randint(1, 2)):
             typ = random.choice(['int', 'char', 'bool'])
             name = self._random_var_name()

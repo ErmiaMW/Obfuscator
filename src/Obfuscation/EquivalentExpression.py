@@ -10,7 +10,6 @@ class ExpressionTransformer(MiniCVisitor):
         self.token_stream = token_stream
 
     def contains_ignored_operators(self, ctx):
-        # Ignore transformations if these mutation operators exist
         text = ctx.getText()
         return any(op in text for op in ('++', '--', '+=', '-='))
 
