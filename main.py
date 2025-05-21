@@ -50,8 +50,6 @@ def run_obfuscator():
         shutil.copyfile(input_path, output_path)
         if inject_dead.get():
             inject_dead_code(output_path, output_path)
-        if flatten_var.get():
-            control_flow_flattening(output_path, output_path)
         if dummy_var.get():
             dummy_function(output_path, output_path)
         if inline_var.get():
@@ -60,6 +58,8 @@ def run_obfuscator():
             equaivalent_expression(output_path, output_path)
         if rename_var.get():
             rename_variables_and_functions(output_path, output_path)
+        if flatten_var.get():
+            control_flow_flattening(output_path, output_path)
         remove_all_empty_lines_from_file(output_path)  
 
   
