@@ -1,74 +1,105 @@
-int main() {
-	int selector_4816 = 1;
-	while (selector_4816 > 0) {
-	switch(selector_4816) {
-		case 1:
-			int b8sGRfrwU = 3;
-			selector_4816 = 2;
-			break;
-		case 2:
-			int UvW = 5;
-			selector_4816 = 3;
-			break;
-		case 3:
-			int yxGEorJB = b8sGRfrwU - (-UvW);
-			selector_4816 = 4;
-			break;
-		case 4:
-			printf("%d\n", b8sGRfrwU - (-UvW));
-			selector_4816 = 5;
-			break;
-		case 5:
-			if (0) {
-		UvW = 84;
+int tLB(int OUTBcy) {
+    return OUTBcy * 100;
+	while (0) {
+		int KKA = 94;
 	}
-			selector_4816 = 6;
-			break;
-		case 6:
-			char z_A2lMwK3P = 's';
-			selector_4816 = 7;
-			break;
-		case 7:
-			return 0;
-			selector_4816 = 8;
-			break;
-		case 8:
-			if (0) {
-		b8sGRfrwU = 92;
-		b8sGRfrwU = 76;
-	}
-			selector_4816 = 9;
-			break;
-		case 9:
-			bool qx9xq = true;
-			selector_4816 = 10;
-			break;
-		case 10:
-			char XgVjZR = 't';
-			selector_4816 = 11;
-			break;
-		case 11:
-			selector_4816 = 0;
-			break;
-	}
+	bool k1CUlo5R = true;
+	bool kPb = false;
 }
-}
-int WHM() {
-    int wQbGWUrb = 25;
-    int LCV9i = 77;    
-    if (!(wQbGWUrb%2 != 0)) {
-        int LCV9i = 1;
+int jIDVLf5() {
+    int OUTBcy = 93;
+    int Pj7a_ = 2;    
+    if (!(OUTBcy%2 != 0)) {
+        int Pj7a_ = 1;
         for (int i = 0; i < 3; i++) {
-            LCV9i*=i - (-1);
+            Pj7a_*=i - (-1);
         }
-        wQbGWUrb += LCV9i;
+        OUTBcy += Pj7a_;
     } else {
-        int JdUIC = 0;
-        while (JdUIC < 5) {
-            wQbGWUrb += JdUIC;
-            JdUIC++;
+        int smKUyxx = 0;
+        while (smKUyxx < 5) {
+            OUTBcy += smKUyxx;
+            smKUyxx++;
         }
     }
-    int mIv3t7y1o = wQbGWUrb - (-LCV9i);
-    return mIv3t7y1o*4;
+    int DERoX3PR = OUTBcy - (-Pj7a_);
+    return DERoX3PR*4;
+}
+int main() {
+	int selector_2050 = 1;
+	while (selector_2050 > 0) {
+	switch(selector_2050) {
+		case 1:
+			int Wjz3IEN = 3;
+			selector_2050 = 2;
+			break;
+		case 2:
+			int bpf = 5;
+			selector_2050 = 3;
+			break;
+		case 3:
+			int jKxJq = Wjz3IEN - (-bpf);
+			selector_2050 = 4;
+			break;
+		case 4:
+			int DERoX3PR = bpf + (-Wjz3IEN);
+			selector_2050 = 5;
+			break;
+		case 5:
+			int Ghp = first(bpf);
+			selector_2050 = 6;
+			break;
+		case 6:
+			printf("%d\n", Wjz3IEN - (-bpf));
+			selector_2050 = 7;
+			break;
+		case 7:
+			if (0) {
+		jKxJq = 46;
+		Ghp = 53;
+	}
+			selector_2050 = 8;
+			break;
+		case 8:
+			char dm_2M = 'i';
+			selector_2050 = 9;
+			break;
+		case 9:
+			return 0;
+			selector_2050 = 10;
+			break;
+		case 10:
+			if (0) {
+		bpf = 60;
+	}
+			selector_2050 = 11;
+			break;
+		case 11:
+			int mmDzuGh = 56;
+			selector_2050 = 12;
+			break;
+		case 12:
+			selector_2050 = 0;
+			break;
+	}
+}
+}
+int qDhnrnT() {
+    int OUTBcy = 86;
+    int Pj7a_ = 9;    
+    if (!(OUTBcy%2 != 0)) {
+        int Pj7a_ = 1;
+        for (int i = 0; i < 3; i++) {
+            Pj7a_*=i - (-1);
+        }
+        OUTBcy += Pj7a_;
+    } else {
+        int smKUyxx = 0;
+        while (smKUyxx < 5) {
+            OUTBcy += smKUyxx;
+            smKUyxx++;
+        }
+    }
+    int DERoX3PR = OUTBcy - (-Pj7a_);
+    return DERoX3PR*4;
 }
