@@ -48,9 +48,9 @@ def run_DeObfuscator():
         if rename_var.get():
             renamer(output_path, output_path)
         if delete_dead.get():
-            expression_simplifier(output_path, output_path)
-        if simple_expression.get():
             delete_dead_code(output_path, output_path)
+        if simple_expression.get():
+            expression_simplifier(output_path, output_path)
         remove_all_empty_lines_from_file(output_path)  
 
   
@@ -62,7 +62,7 @@ def run_DeObfuscator():
 
 # GUI setup
 root = tk.Tk()
-root.title("MiniC Obfuscator")
+root.title("MiniC De-Obfuscator")
 
 tk.Label(root, text="Input File:").grid(row=0, column=0, sticky='e')
 input_entry = tk.Entry(root, width=50)
@@ -82,12 +82,12 @@ simple_expression = tk.BooleanVar(value=False)
 
 tk.Checkbutton(root, text="Rename Variables & Functions",
                variable=rename_var).grid(row=2, column=1, sticky='w')
-tk.Checkbutton(root, text="Inject Dead Code", variable=delete_dead).grid(
+tk.Checkbutton(root, text="delete Dead Code", variable=delete_dead).grid(
     row=3, column=1, sticky='w')
-tk.Checkbutton(root, text="Control Flow Flattening",
+tk.Checkbutton(root, text="simple expression",
                variable=simple_expression).grid(row=4, column=1, sticky='w')
 
-tk.Button(root, text="Run Obfuscator", command=run_DeObfuscator).grid(
+tk.Button(root, text="Run De-Obfuscator", command=run_DeObfuscator).grid(
     row=8, column=1, pady=10)
 
 root.mainloop()
