@@ -1,17 +1,3 @@
-antlr4 -Dlanguage=Python3 -visitor -listener -o src/Grammar Grammar/MiniC.g4
-
-runnn  for  de-obfusccatorin   root(in /De-Obfuscator)
-
-
-
-
-
-
-
-
-
-
-
 # Developed by :
 - Ermia Mirzaei
 - Ali Norouzi
